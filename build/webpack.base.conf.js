@@ -2,7 +2,7 @@ var path = require('path')
 var config = require('../config')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
-
+var webpack=require('webpack');
 var env = process.env.NODE_ENV
 // check env & config/index.js to decide whether to enable CSS source maps for the
 // various preprocessor loaders added to vue-loader at the end of this file
@@ -14,6 +14,7 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  
   output: {
     path: config.build.assetsRoot,
     publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
@@ -73,5 +74,12 @@ module.exports = {
         browsers: ['last 2 versions']
       })
     ]
-  }
+  },
+  plugins: [
+  new webpack.ProvidePlugin({
+    $:"jquery",
+    jQuery:"jquery",
+    "windows.jQuery":"jquery"
+  })
+]
 }
