@@ -24,7 +24,7 @@
 
 <td><div @click='mius(item)'  class='mius'><img  v-bind:src='image2' :width='width' :height='height' /></div>  <span class='counts'>{{item.count}} </span>   <div  @click='plus(item)' class='plus'>  <img  v-bind:src='image1' :width='width' :height='height' /></div></td>
 
-<td>{{getTotal(item)}} </td>
+<td>{{item.price*item.count|round}} </td>
 
 <td><span class='glyphicon glyphicon-trash' id='remove'></span></td>
 
@@ -122,16 +122,17 @@ plus:function(item){
 },
 
 getTotal:function(){
-  
-    var sum=0; //sum 需赋值为0  即sum=0   不能直接写成var sum   如果不将sum赋值  那么在进行sun+=  操作时 会进行类型转换 undefined+数字 undefined
+ 
+    var sum=0; //sum 需赋值为0  即sum=0   不能直接写成var sum   如果不将sum赋值  那么在进行sun+=  操作时 会进行类型转换 
+                 //undefined+数字 undefined
+    this.dataList.forEach(function(value,index){//成为NAN  和数字相加 得到NAN    所以在给sum 初始化时应该赋值0
 
-    this.dataList.forEach(function(item,index){//成为NAN  和数字相加 得到NAN    所以在给sum 初始化时应该赋值0
+         sum+=value.price*value.count;
+        
+       });
+     
+   return sum;
 
-         sum+=item.price*item.count;
-       })
-       return sum;
-
-  
 }
 
 
